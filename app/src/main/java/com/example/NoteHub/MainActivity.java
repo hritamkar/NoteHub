@@ -1,37 +1,28 @@
 package com.example.NoteHub;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
+    int flag=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && flag==0) {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new MainPage()).commit();
         }
 
-        Intent intent = getIntent();
-        NoteModel noteModel = null;
-        if (intent != null) {
-            noteModel = intent.getParcelableExtra("note_model");
+        Intent intent=getIntent();
+        if(intent!=null){
+            flag=intent.getIntExtra("flag_value",0);
         }
 
-        MainPage mainPageFragment = new MainPage();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("note_model", noteModel);
-        mainPageFragment.setArguments(bundle);
-
-        replaceFragment(mainPageFragment);
+        if(flag==1) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new MainPage()).commit();
+        }
     }
-
-    private void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-    }
-
 }

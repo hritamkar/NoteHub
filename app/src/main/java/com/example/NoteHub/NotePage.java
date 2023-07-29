@@ -27,51 +27,45 @@ public class NotePage extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Create New Note");
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         EditText noteContent = findViewById(R.id.et_notecontent);
-        btn_done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!noteContent.getText().toString().equals("")) {
-                    dialog = new Dialog(NotePage.this);
-                    dialog.setContentView(R.layout.save_layout);
+        btn_done.setOnClickListener(v -> {
+            if (!noteContent.getText().toString().equals("")) {
+                dialog = new Dialog(NotePage.this);
+                dialog.setContentView(R.layout.save_layout);
 
-                    EditText etName = dialog.findViewById(R.id.et_notename);
-                    AppCompatButton saveBtn = dialog.findViewById(R.id.btn_save);
-                    AppCompatButton cancelBtn = dialog.findViewById(R.id.btn_cancel);
-                    String notecontent1 = noteContent.getText().toString();
+                EditText etName = dialog.findViewById(R.id.et_notename);
+                AppCompatButton saveBtn = dialog.findViewById(R.id.btn_save);
+                AppCompatButton cancelBtn = dialog.findViewById(R.id.btn_cancel);
+                String notecontent1 = noteContent.getText().toString();
 
-                    saveBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String notename = "";
-                            if (!etName.getText().toString().equals("")) {
-                                notename = etName.getText().toString();
-                            } else {
-                                Toast.makeText(NotePage.this, "Enter Valid name", Toast.LENGTH_SHORT).show();
-                            }
-                            startActivity(new Intent(NotePage.this, MainActivity.class).putExtra("note_model", new NoteModel(notename, notecontent1)));
-                            finish();
-                        }
-                    });
-                    cancelBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.dismiss();
-                        }
-                    });
+                saveBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String notename = "";
+                        if (!etName.getText().toString().equals("")) {
+                            notename = etName.getText().toString();
+                        } else
+                            Toast.makeText(NotePage.this, "Enter Valid name", Toast.LENGTH_SHORT).show();
+                        ((MyApplication) getApplication()).setData(new NoteModel(notename,notecontent1));
+                        Intent intent=new Intent(NotePage.this,MainActivity.class);
+                        intent.putExtra("flag_value",1);
+                        startActivity(intent);
+                        finish();
 
-                    dialog.show();
-                } else {
-                    Toast.makeText(NotePage.this, "Enter note content", Toast.LENGTH_SHORT).show();
-                }
-            }
+                    }
+                });
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            } else
+                Toast.makeText(NotePage.this, "Enter note content", Toast.LENGTH_SHORT).show();
         });
     }
 
