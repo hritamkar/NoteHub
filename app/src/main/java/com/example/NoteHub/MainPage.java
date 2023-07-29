@@ -16,11 +16,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class MainPage extends Fragment {
-    public ArrayList<NoteModel> arrayList;
+    public ArrayList<NoteModel> arrayList= new ArrayList<>();
     public RecyclerNoteAdapter adapter;
 
     public MainPage() {
-        arrayList = new ArrayList<>();
     }
 
     @Override
@@ -40,16 +39,9 @@ public class MainPage extends Fragment {
                 }
             }
         });
+        arrayList= ((MyApplication) requireActivity().getApplication()).getData();
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            NoteModel noteModel = bundle.getParcelable("note_model");
-            if (noteModel != null ) {
-                arrayList.add(noteModel);
-            }
-        }
-
-        adapter = new RecyclerNoteAdapter(getContext(), arrayList);
+        adapter = new RecyclerNoteAdapter(getActivity(), arrayList);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
