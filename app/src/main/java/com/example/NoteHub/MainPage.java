@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,6 +28,7 @@ public class MainPage extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main_page, container, false);
         FloatingActionButton fab_add = rootView.findViewById(R.id.fab_add);
         RecyclerView recyclerView = rootView.findViewById(R.id.notes_list);
+        TextView txt_empty= rootView.findViewById(R.id.empty_txt);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -40,6 +42,8 @@ public class MainPage extends Fragment {
             }
         });
         arrayList= ((MyApplication) requireActivity().getApplication()).getData();
+        if(arrayList.size()==0)
+            txt_empty.setAlpha(1);
 
         adapter = new RecyclerNoteAdapter(getActivity(), arrayList);
         recyclerView.setAdapter(adapter);

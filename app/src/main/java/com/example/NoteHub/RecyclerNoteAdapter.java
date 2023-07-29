@@ -29,7 +29,6 @@ public class RecyclerNoteAdapter extends RecyclerView.Adapter<RecyclerNoteAdapte
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         holder.name.setText(arrayList.get(position).Notename);
         holder.content.setText(arrayList.get(position).Notecontent);
-
     }
 
     @Override
@@ -37,7 +36,7 @@ public class RecyclerNoteAdapter extends RecyclerView.Adapter<RecyclerNoteAdapte
         return arrayList.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder {
+    public static class viewHolder extends RecyclerView.ViewHolder {
         TextView name,content;
         public viewHolder(@NonNull View itemView) {
             super(itemView);

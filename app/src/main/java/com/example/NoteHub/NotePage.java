@@ -50,7 +50,6 @@ public class NotePage extends AppCompatActivity {
                             Toast.makeText(NotePage.this, "Enter Valid name", Toast.LENGTH_SHORT).show();
                         ((MyApplication) getApplication()).setData(new NoteModel(notename,notecontent1));
                         Intent intent=new Intent(NotePage.this,MainActivity.class);
-                        intent.putExtra("flag_value",1);
                         startActivity(intent);
                         finish();
 
